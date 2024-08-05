@@ -22,6 +22,8 @@
     "postgres": "^3.4.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "styled-components": "^6.1.12",
+    "twin.macro": "^3.4.1",
     "zod": "^3.23.3"
   },
   "devDependencies": {
