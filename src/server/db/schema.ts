@@ -3,6 +3,7 @@
 
 import { sql } from "drizzle-orm";
 import {
+  boolean,
   index,
   pgTableCreator,
   serial,
@@ -16,13 +17,14 @@ import {
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = pgTableCreator((name) => `cookbook_${name}`);
+export const createTable = pgTableCreator((name) => `colorai_${name}`);
 
-export const posts = createTable(
-  "post",
+export const users = createTable(
+  "user",
   {
     id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
+    email: varchar("email", { length: 512 }).notNull(),
+    marketingEmails: boolean("marketing_emails").default(false).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -30,7 +32,7 @@ export const posts = createTable(
       () => new Date()
     ),
   },
-  (example) => ({
-    nameIndex: index("name_idx").on(example.name),
+  (user) => ({
+    emailIndex: index("email_idx").on(user.email),
   })
 );
