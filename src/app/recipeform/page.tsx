@@ -89,7 +89,7 @@ const RecipeForm: React.FC = () => {
 
   return (
     <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-8 mt-12">
-      <h2 className="text-3xl font-bold text-gray-800 mb-6">Find Your Perfect Recipe</h2>
+      <h2 className="text-3xl font-bold text-gray-800 mb-6 mt-3">Find Your Perfect Recipe</h2>
       
       <form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
         {/* Meal type */}

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between bg-gray-50 p-12 md:p-16">
+    <div className="mt-7 flex flex-col md:flex-row items-center justify-between bg-gray-50 p-12 md:p-16">
       <div className="mr-10 md:w-1/2 text-center md:text-left mb-8 md:mb-0">
         <h1 className="text-5xl text-center font-extrabold text-gray-800 mb-6">
           Welcome to CookedUp
