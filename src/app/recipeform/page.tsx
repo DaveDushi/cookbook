@@ -14,9 +14,12 @@ const skillList = ['Beginner', 'Intermediate', 'Expert'];
 
 const RecipeForm: React.FC = () => {
   const [cookingTime, setCookingTime] = useState(30);
+  const [meal, setMeal] = useState(mealList[0]);
+  const [cuisine, setCuisine] = useState(cuisineList[0]);
+  const [experience, setExperience] = useState(skillList[0]);
   const [servings, setServings] = useState(2);
   const [email, setEmail] = useState('');
-  const [ingredients, setIngredients] = useState<string[]>(['']);
+  const [ingredients, setIngredients] = useState<string[]>([]);
   const [marketingEmail, setMarketingEmail] = useState<boolean>(true);
 
   const handleIngredientChange = (index: number, value: string) => {
@@ -38,7 +41,36 @@ const RecipeForm: React.FC = () => {
 
   const handleSubmit = async (event?: React.FormEvent<HTMLFormElement>) => {
     if (event) event.preventDefault();
-    alert('Form submitted')
+
+    const formData = {
+        meal,
+        ingredients,
+        cuisine,
+        cookingTime,
+        servings,
+        experience,
+        email,
+        marketingEmail
+    }
+
+    try {
+        const response = await fetch ('/api/cookup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+
+        if (response.ok) {
+            alert('form submitted')
+        } else {
+            alert('Failed to generate recipe, please try again later.')
+        }
+    } catch (error) {
+        console.error('Error submitting the form', error);
+        alert('Failed to generate recipe, please try again later.')
+    }
   };
   
 
@@ -59,7 +91,11 @@ const RecipeForm: React.FC = () => {
           <label className="block text-lg font-medium text-gray-700 mb-2">
             What are you making?
           </label>
-          <select className="form-select text-md mt-1 block border border-gray-300 rounded-md">
+          <select 
+          className="form-select text-md mt-1 block border border-gray-300 rounded-md"
+          value={meal}
+          onChange={(e) => setMeal(e.target.value)}
+          >
             {mealList.map(meal => (
               <option key={meal} value={meal}>{meal}</option>
             ))}
@@ -103,7 +139,11 @@ const RecipeForm: React.FC = () => {
           <label className="block text-lg font-medium text-gray-700 mb-2">
             Which type of cuisine?
           </label>
-          <select className="form-select text-md mt-1 block border border-gray-300 rounded-md">
+          <select 
+          className="form-select text-md mt-1 block border border-gray-300 rounded-md"
+          value={cuisine}
+          onChange={(e) => setCuisine(e.target.value)}
+          >
             {cuisineList.map(cuisine => (
               <option key={cuisine} value={cuisine}>{cuisine}</option>
             ))}
@@ -151,7 +191,11 @@ const RecipeForm: React.FC = () => {
           <label className="block text-lg font-medium text-gray-700 mb-2">
             Experience level
           </label>
-          <select className="form-select mt-1 block border border-gray-300 rounded-md">
+          <select 
+          className="form-select mt-1 block border border-gray-300 rounded-md"
+          value={experience}
+          onChange={(e) => setExperience(e.target.value)}
+          >
             {skillList.map(level => (
               <option key={level} value={level}>{level}</option>
             ))}
