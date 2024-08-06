@@ -1,11 +1,12 @@
 'use client'
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const cuisineList = [ 
     'Israeli', 'Mexican', 'Chinese', 'Texas Ranch', 'Italian', 'Indian', 'Thai', 
     'Japanese', 'French', 'Greek', 'Mediterranean', 'Spanish', 'Korean', 
     'Vietnamese', 'Middle Eastern', 'Caribbean', 'American', 'African', 'German', 
-    'Russian', 'Brazilian', 'Turkish'
+    'Russian', 'Brazilian', 'Turkish', 'Any'
   ];
   
 const mealList = ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Dessert'];
@@ -13,6 +14,7 @@ const mealList = ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Dessert'];
 const skillList = ['Beginner', 'Intermediate', 'Expert'];
 
 const RecipeForm: React.FC = () => {
+    const router = useRouter();
   const [cookingTime, setCookingTime] = useState(30);
   const [meal, setMeal] = useState(mealList[0]);
   const [cuisine, setCuisine] = useState(cuisineList[0]);
@@ -21,6 +23,7 @@ const RecipeForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [marketingEmail, setMarketingEmail] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleIngredientChange = (index: number, value: string) => {
     const newIngredients = [...ingredients];
@@ -41,7 +44,7 @@ const RecipeForm: React.FC = () => {
 
   const handleSubmit = async (event?: React.FormEvent<HTMLFormElement>) => {
     if (event) event.preventDefault();
-
+    setLoading(true);
     const formData = {
         meal,
         ingredients,
@@ -63,11 +66,14 @@ const RecipeForm: React.FC = () => {
         })
 
         if (response.ok) {
-            alert('form submitted')
+            setLoading(false)
+            router.push('/thank-you');
         } else {
+            setLoading(false)
             alert('Failed to generate recipe, please try again later.')
         }
     } catch (error) {
+        setLoading(false)
         console.error('Error submitting the form', error);
         alert('Failed to generate recipe, please try again later.')
     }
@@ -230,7 +236,7 @@ const RecipeForm: React.FC = () => {
         {/* Submit button */}
         <div className="text-center">
           <button type="submit" className="bg-green-500 text-white px-6 py-3 rounded-full hover:bg-green-600 transition duration-300">
-            Create Recipe
+            {loading ? 'Creating...' : 'Create Recipe' }
           </button>
         </div>
       </form>

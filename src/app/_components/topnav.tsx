@@ -6,7 +6,7 @@ export function TopNav() {
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
               <a href="/" className="text-2xl font-bold text-green-600 hover:text-green-700 transition duration-300">
-                CookBook
+                CookedUp
               </a>
             </div>
           </div>
