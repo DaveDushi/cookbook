@@ -4,13 +4,13 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY as string,
 });
 
-const getRecipe = async (prompt: string): Promise<string> => {
+const getRecipe = async (prompt: string, meal: string): Promise<string> => {
   const response = await openai.chat.completions.create({
     model: "gpt-4o",
     messages: [
       {
         role: "system",
-        content: "You're a master chef who specializes in breakfast. Output a recipe in the given json format: { recipeName: [recipe name], desciption: [recipe description], prepTime: [time to prep], cookTime: [time to cook], servings: [amount of servings], ingredients: [list of ingredients], directions: [list of directions] }",
+        content: `You're a master chef who specializes in ${meal}. Output a recipe in the given json format: { recipeName: [recipe name], desciption: [recipe description], prepTime: [time to prep], cookTime: [time to cook], servings: [amount of servings], ingredients: [list of ingredients], directions: [list of directions] }`,
       },
       {
         role: "user",

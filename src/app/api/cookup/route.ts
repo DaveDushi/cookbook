@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     const aiMessage = `An ${cuisine} style ${meal} recipe for ${servings} people ${ingredients.length > 0 ? 'using ' + ingredients : ''} that takes up to ${cookingTime} minutes to make 
 and has a difficulty level of ${experience}`
     
-    const aiResponse = await getRecipe(aiMessage)
+    const aiResponse = await getRecipe(aiMessage, meal)
     const aiResponseJson = JSON.parse(aiResponse)
     console.log(aiResponseJson)
 
